@@ -30,24 +30,37 @@ def is_valid(bound, letter, password):
 
     return 0
 
+def is_valid_new_rules(bound, letter, password):
+    rule1 = bound[0] - 1
+    rule2 = bound[1] - 1
+    if letter == password[rule1] and letter != password[rule2]:
+        return 1
+    if letter != password[rule1] and letter == password[rule2]:
+        return 1
+
+    return 0
+
 
 def count_valid(filename):
     entries = get_input(filename)
     count = 0
+    count_new_rules = 0
     for entry in entries:
         bound, letter, password = parse_line(entry)
-        #print(entry, is_valid(bound, letter, password))
         count = count + is_valid(bound, letter, password)
+        count_new_rules = count_new_rules + is_valid_new_rules(bound, letter,
+                password)
 
-    return count
+    return count, count_new_rules
 
 
 def main():
-    print(count_valid('./input'))
+    print(list(count_valid('./input')))
     return
 
 
 if __name__ == '__main__':
     main()
+
 
 
