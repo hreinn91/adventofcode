@@ -3,7 +3,7 @@ from util import get_input
 
 
 #
-#   Find the two entries in the expense reports that sum to 2020
+#   Find the two entries in the expense reports that sum to year2020
 #   and calculate the product of these two numbers.
 #
 
