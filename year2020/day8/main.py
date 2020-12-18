@@ -56,8 +56,6 @@ def part2(instructions, history):
         except RuntimeError:
             print('Instructions finished with exceptions correctly.')
 
-    print('done')
-
 
 def main():
     instrucions, history = part1()
