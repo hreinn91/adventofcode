@@ -1,32 +1,33 @@
 numeral_map = {1: 'I',
                5: 'V',
                10: 'X',
-               # 50: 'L',
-               # 100: 'C',
-               # 500: 'D',
-               # 1000: 'M'
+               50: 'L',
+               100: 'C',
+               500: 'D',
+               1000: 'M'
                }
 
 mappable_number = sorted(numeral_map.keys(), reverse=True)
 
 
-def convert_numeral_simple(number):
-    if number == 0:
+def is_number_in_map(number):
+    return number in mappable_number
+
+
+def convert_numeral(number):
+    if number <= 0:
         return ''
 
-    converted_number = ''
+    if is_number_in_map(number):
+        return numeral_map[number]
+
     for key in mappable_number:
-        while number >= key:
-            converted_number = converted_number + numeral_map[key]
-            number = number - key
-
-    return converted_number
-
-
-def convert_odd_numbers(number):
-    if number == key - 1:
-        return converted_number + 'I' + convert_numeral(key)
+        if number > key:
+            return convert_numeral(key) + convert_numeral(number - key)
+        elif is_number_in_map(key - number):
+            return convert_numeral(key - number) + convert_numeral(key)
 
 
-def main():
-    pass
+
+if __name__ == '__main__':
+    main()
