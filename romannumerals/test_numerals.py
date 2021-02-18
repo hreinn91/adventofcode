@@ -1,14 +1,19 @@
 from romannumerals.main import convert_numeral
 from romannumerals.main import is_number_in_map
+from romannumerals.main import get_digits_by_power
+
+
+def test_number_parser():
+    digits = get_digits_by_power(4556)
+    assert digits == [4000, 500, 50, 6]
 
 
 def test_harder_numerals():
     assert convert_numeral(4) == 'IV'
     assert convert_numeral(9) == 'IX'
     assert convert_numeral(14) == 'XIV'
-    # assert convert_numeral(99) == 'XCIX'
-
-
+    assert convert_numeral(99) == 'XCIX'
+    assert convert_numeral(999) == 'CMXCIX'
 
 
 def test_is_number_in_number_map():

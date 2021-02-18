@@ -10,6 +10,16 @@ numeral_map = {1: 'I',
 mappable_number = sorted(numeral_map.keys(), reverse=True)
 
 
+def get_digits_by_power(number):
+    digits = []
+    number = str(number)
+    i = 1
+    for c in number:
+        digits.append(int(c + '0' * (len(number) - i)))
+        i = i + 1
+    return digits    
+            
+        
 def is_number_in_map(number):
     return number in mappable_number
 
@@ -17,6 +27,18 @@ def is_number_in_map(number):
 def convert_numeral(number):
     if number <= 0:
         return ''
+
+    if is_number_in_map(number):
+        return numeral_map[number]
+    
+    numeral = ''
+    for digit in get_digits_by_power(number):
+        numeral = numeral + convert_numeral_from_map(digit)
+
+    return numeral
+        
+
+def convert_numeral_from_map(number):
 
     if is_number_in_map(number):
         return numeral_map[number]
