@@ -5,7 +5,7 @@ from .Image import Image
 # Execute part1
 def part1():
     full_image = Image('src/resources/test1')
-    tiles = full_image.tiles
+    tiles = full_image.tiles_container
     return
 
 

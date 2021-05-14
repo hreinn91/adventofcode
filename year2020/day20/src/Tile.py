@@ -1,15 +1,15 @@
 class Tile:
-    def __init__(self, tile_id, segment):
+    def __init__(self, tile_id, rows):
         self.id = tile_id
-        self.size = len(segment[0])
-        self.segment = segment
-        self.boarder_top = segment[0]
-        self.boarder_bottom = segment[-1]
+        self.size = len(rows[0])
+        self.rows = rows
+        self.boarder_top = rows[0]
+        self.boarder_bottom = rows[-1]
         self.boarder_left = ""
         self.boarder_right = ""
-        for row in segment:
-            self.boarder_left = self.boarder_left + row[0]
-            self.boarder_right = self.boarder_right + row[-1]
+        for row in rows:
+            self.boarder_left += row[0]
+            self.boarder_right += row[-1]
         self.neighbour_top = None
         self.neighbour_bottom = None
         self.neighbour_left = None
@@ -17,7 +17,7 @@ class Tile:
 
     def print_tile(self):
         print('\n')
-        for row in self.segment:
+        for row in self.rows:
             print(row)
 
 
