@@ -7,6 +7,8 @@ test_image = Image(test_image_file)
 
 def test_print_image():
     print('\n')
+    test_image.print_tile_grid()
+    print('\n')
     test_image.print_image()
     pass
 

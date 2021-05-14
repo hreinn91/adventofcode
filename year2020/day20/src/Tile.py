@@ -1,24 +1,52 @@
+# # # #  #
+# 'pppp' #
+# 'pppp' #
+# 'pppp' #
+# 'pppp' #
+# # # #  #
+
+# This represents one Tile
+# With 4 rows of 4 pixels
+# Every Tile is assumed to be quadratic
+
+
 class Tile:
     def __init__(self, tile_id, rows):
         self.id = tile_id
         self.size = len(rows[0])
         self.rows = rows
-        self.boarder_top = rows[0]
-        self.boarder_bottom = rows[-1]
-        self.boarder_left = ""
-        self.boarder_right = ""
-        for row in rows:
+        self.boarder_top = ''
+        self.boarder_bottom = ''
+        self.boarder_left = ''
+        self.boarder_right = ''
+        self.set_boarders()
+
+    def set_boarders(self):
+        self.boarder_top = self.rows[0]
+        self.boarder_bottom = self.rows[-1]
+        self.boarder_left = ''
+        self.boarder_right = ''
+        for row in self.rows:
             self.boarder_left += row[0]
             self.boarder_right += row[-1]
-        self.neighbour_top = None
-        self.neighbour_bottom = None
-        self.neighbour_left = None
-        self.neighbour_right = None
 
     def print_tile(self):
         print('\n')
         for row in self.rows:
             print(row)
+
+    def flip(self):
+        self.rows = [row[::-1] for row in self.rows]
+        self.set_boarders()
+
+    def rotate(self):
+        rotated_rows = ['' for row in self.rows]
+        for row in range(0, self.size):
+            for col in range(0, self.size):
+                pixel = self.rows[row][col]
+                rotated_rows[col] = pixel+rotated_rows[col]
+        self.rows = rotated_rows
+        self.set_boarders()
 
 
 def get_tiles_from_input_file(input_file):
