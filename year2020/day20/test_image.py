@@ -9,6 +9,6 @@ def test_print_image():
     print('\n')
     test_image.print_tile_grid()
     print('\n')
-    test_image.print_image()
+    test_image.print()
     pass
 
