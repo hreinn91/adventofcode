@@ -19,6 +19,7 @@ from math import sqrt
 
 class Image:
     def __init__(self, input_file):
+        # Improvement would be to put tiles in map rather than list!
         self.tiles_container = get_tiles_from_input_file(input_file)
         self.tile_ids = [tile.id for tile in self.tiles_container]
         self.size = int(sqrt(len(self.tiles_container)))
@@ -53,4 +54,3 @@ class Image:
             tile = self.tiles_container[i]
             for j in range(i + 1, self.size * self.size):
                 tile_to_compare = self.tiles_container[j]
-
