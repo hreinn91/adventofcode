@@ -10,7 +10,7 @@ right_boarder = '...#.##..#'
 
 def test_print_tile():
     tiles = get_tiles_from_input_file('src/resources/tile_2311')
-    tile_2311 = tiles[0]
+    tile_2311 = tiles[2311]
     assert tile_2311.id == 2311
     tile_2311.print_tile()
     assert tile_2311.boarder_left == left_boarder
@@ -21,7 +21,7 @@ def test_print_tile():
 
 def test_flip_tile():
     tiles = get_tiles_from_input_file('src/resources/tile_2311')
-    tile_2311 = tiles[0]
+    tile_2311 = tiles[2311]
     tile_2311.print_tile()
     tile_2311.flip()
     tile_2311.print_tile()
@@ -33,7 +33,7 @@ def test_flip_tile():
 
 def test_rotate_tile():
     tiles = get_tiles_from_input_file('src/resources/tile_2311')
-    tile_2311 = tiles[0]
+    tile_2311 = tiles[2311]
     tile_2311.print_tile()
     tile_2311.rotate()
     tile_2311.print_tile()
@@ -44,20 +44,20 @@ def test_rotate_tile():
 
 
 def test_match_tiles():
-    tiles = get_tiles_from_input_file('src/resources/test1_1')
-    tile_2311 = deepcopy(tiles[0])
-    tile_1951 = deepcopy(tiles[1])
+    tiles = get_tiles_from_input_file('src/resources/test1_2')
+    tile_2311 = deepcopy(tiles[2311])
+    tile_1951 = deepcopy(tiles[1951])
     tile_1951.match(tile_2311)
     assert tile_2311.next_left == 1951
     assert tile_1951.next_right == 2311
-    tile_2311 = deepcopy(tiles[0])
-    tile_1951 = deepcopy(tiles[1])
+    tile_2311 = deepcopy(tiles[2311])
+    tile_1951 = deepcopy(tiles[1951])
     tile_1951.match(tile_2311)
     tile_2311.flip()
     assert tile_2311.next_left == 1951
     assert tile_1951.next_right == 2311
-    tile_2311 = deepcopy(tiles[0])
-    tile_1951 = deepcopy(tiles[1])
+    tile_2311 = deepcopy(tiles[2311])
+    tile_1951 = deepcopy(tiles[1951])
     tile_1951.rotate()
     tile_2311.match(tile_1951)
     assert tile_2311.next_top == 1951

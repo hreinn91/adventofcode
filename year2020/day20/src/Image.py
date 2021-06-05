@@ -1,4 +1,5 @@
-from .Tile import Tile, get_tiles_from_input_file
+from .Tile import Tile
+from .Util import get_tiles_from_input_file
 from math import sqrt
 
 
@@ -20,26 +21,21 @@ from math import sqrt
 class Image:
     def __init__(self, input_file):
         # Improvement would be to put tiles in map rather than list!
-        self.tiles_container = get_tiles_from_input_file(input_file)
-        self.tile_ids = [tile.id for tile in self.tiles_container]
-        self.size = int(sqrt(len(self.tiles_container)))
-        self.tile_size = self.tiles_container[0].size
-
-    def get_tile(self, tile_id):
-        for tile in self.tiles_container:
-            if tile.id == tile_id:
-                return tile
-        raise ValueError('Invalid tile_id - Id not in tiles_container')
+        self.tiles_map = get_tiles_from_input_file(input_file)
+        self.tile_ids = list(self.tiles_map.keys())
+        self.tile_grid = []
+        self.size = int(sqrt(len(self.tiles_map)))
+        self.tile_size = next(iter(self.tiles_map.values())).size
 
     def print_tile_grid(self):
         for row in range(0, self.size):
             im_row_string = ''
             for col in range(0, self.size):
-                im_row_string += str(self.tile_ids[col + row * self.size]) + ' '
+                im_row_string += str(self.tile_grid[col + row * self.size]) + ' '
             print(im_row_string)
 
     def print(self):
-        tiles = [self.get_tile(tile_id) for tile_id in self.tile_ids]
+        tiles = [self.tiles_map[tile_id] for tile_id in self.tile_ids]
         for im_row in range(0, self.size):
             tiles_row = tiles[im_row * self.size: im_row * self.size + self.size]
             for tile_row in range(0, self.tile_size):
@@ -50,7 +46,38 @@ class Image:
                 print(image_row_str)
 
     def assemble(self):
-        for i in range(0, self.size * self.size):
-            tile = self.tiles_container[i]
-            for j in range(i + 1, self.size * self.size):
-                tile_to_compare = self.tiles_container[j]
+        number_of_tiles = len(self.tile_ids)
+        for i in range(0, number_of_tiles):
+            tile_id = self.tile_ids[i]
+            tile = self.tiles_map[tile_id]
+            for j in range(i + 1, number_of_tiles):
+                tile_to_compare_id = self.tile_ids[j]
+                tile_to_compare = self.tiles_map[tile_to_compare_id]
+                tile.match(tile_to_compare)
+        self.assemble_tile_grid()
+
+    def assemble_tile_grid(self):
+        top_left_corner = self.find_top_left_corner()
+        self.append_to_grid(top_left_corner, top_left_corner)
+
+    def find_top_left_corner(self):
+        top_left_corner = None
+        for id, tile in self.tiles_map.items():
+            if not tile.is_free() and tile.next_top is None and tile.next_left is None:
+                top_left_corner = tile
+        if top_left_corner is None:
+            raise RuntimeError('Assembly failed - Top left corner missing.')
+        return top_left_corner
+
+    def append_to_grid(self, start_of_row, current_tile):
+        if current_tile is None:
+            if start_of_row.next_bottom is None:
+                return
+            else:
+                next_row = self.tiles_map[start_of_row.next_bottom]
+                return self.append_to_grid(next_row, next_row)
+
+
+        # Fix None problem
+        self.tile_grid.append(current_tile.id)
+        self.append_to_grid(start_of_row, self.tiles_map[current_tile.next_right])
