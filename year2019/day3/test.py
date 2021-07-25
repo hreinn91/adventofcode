@@ -2,7 +2,7 @@ import unittest
 from main import Wires
 from main import norm_l1
 
-wires = Wires('test_input1.txt')
+wires = Wires('test_input_1.txt')
 
 
 class MainTestCase(unittest.TestCase):
@@ -31,6 +31,13 @@ class MainTestCase(unittest.TestCase):
 
         manhattan_distance = wires.get_shortest_intersection(intersections)
         self.assertEqual(manhattan_distance, 6)
+
+    def test_distance(self):
+        test_wires_2 = Wires('test_input_2.txt')
+        self.assertEqual(test_wires_2.manhattan_distance, 159)
+
+        test_wires_3 = Wires('test_input_3.txt')
+        self.assertEqual(test_wires_3.manhattan_distance, 135)
 
 
 

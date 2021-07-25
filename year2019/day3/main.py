@@ -59,7 +59,7 @@ class Wires:
 
     @staticmethod
     def parse(instruction):
-        return instruction[0], int(instruction[1])
+        return instruction[0], int(instruction[1:])
 
     def print_instructions(self):
         print(self.wire_1)
@@ -67,21 +67,29 @@ class Wires:
 
     @staticmethod
     def get_grid_dimensions(grid):
-        x_size = 0
-        y_size = 0
-        for key in grid.keys():
-            if x_size < key[0]:
-                x_size = key[0]
-            if y_size < key[1]:
-                y_size = key[1]
+        xmin = 0
+        xmax = 0
+        ymin = 0
+        ymax = 0
 
-        return x_size, y_size
+        for key in grid.keys():
+            if xmax < key[0]:
+                xmax = key[0]
+            elif xmin > key[0]:
+                xmin = key[0]
+
+            if ymax < key[1]:
+                ymax = key[1]
+            elif ymin > key[1]:
+                ymin = key[1]
+
+        return xmin, xmax, ymin, ymax
 
     def print_grid(self, grid):
-        x_size, y_size = self.get_grid_dimensions(grid)
-        for y in range(-100, y_size + 2):
+        xmin, xmax, ymin, ymax = self.get_grid_dimensions(grid)
+        for y in range(ymin - 1, ymax + 2):
             row = []
-            for x in range(-100, x_size + 2):
+            for x in range(xmin - 1, xmax + 2):
                 if (x, y) in grid:
                     row.insert(x, grid[(x, y)])
                 else:
@@ -113,7 +121,6 @@ class Wires:
 
 if __name__ == '__main__':
     wires = Wires('input1.txt')
-    wires.print_grid(wires.grid)
     print(wires.manhattan_distance)
 
     print("Done")
